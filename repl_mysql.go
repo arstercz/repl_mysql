@@ -74,7 +74,7 @@ func main() {
 	f := flag.String("binlog", "", "replicate from this binlog file")
 	n := flag.Int64("pos", 0, "replicate from this position which in the binlog file")
 	d := flag.String("database", "", "only replicate the database.")
-	t := flag.String("table", "", "only replicate the table.")
+	t := flag.String("table", "", "only replicate the table, multiple tables are separated by commas")
 	r := flag.Bool("rowevent", false, "whether print row event change")
 
 	flag.Parse()

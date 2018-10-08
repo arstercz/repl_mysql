@@ -33,7 +33,7 @@ Usage of ./repl_mysql:
   -database string
         only replicate the database.
   -table string
-        only replicate the table.
+        only replicate the table, multiple tables are separated by commas.
   -host string
         the mysql master server address. (default "localhost")
   -port int
@@ -135,8 +135,9 @@ Query: update tri1 set name = "arstercz" where id = 10
 
 #### only print the specified database and table message
 
+the `-table` option can be set multiple tables which seperated by commas:
 ```
-./repl_mysql -host 10.0.21.5 -user user_repl -pass xxxxxx -port 3301 -database percona -table tri1 -rowevent -binlog mysql-bin.000035 -pos 3687
+./repl_mysql -host 10.0.21.5 -user user_repl -pass xxxxxx -port 3301 -database percona -table tri1,tri2 -rowevent -binlog mysql-bin.000035 -pos 3687
 ......
 ......
 
