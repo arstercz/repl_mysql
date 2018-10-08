@@ -12,6 +12,7 @@ import (
 	"time"
 	"flag"
 	"fmt"
+	"strings"
 )
 
 type SQLInfo struct {
@@ -180,6 +181,7 @@ func main() {
 		eventinfo.Binlogname = binlog
 		eventinfo.Logpos = uint32(event.Header.LogPos)
 		eventinfo.Eventsize = event.Header.EventSize
+		ts := strings.Split(table, ",")
 
 		switch eventinfo.Type {
 			case replication.QUERY_EVENT:
@@ -187,7 +189,15 @@ func main() {
 				eventinfo.Table = meta.Table
 				eventinfo.Query = meta.Query
 				if len(table) > 0 {
-					matchstring := fmt.Sprintf("(?i:(\\s+|.)(%s|`%s`)\\s+)", table, table)
+					var matchstring = fmt.Sprintf("(?i:(\\s+))(")
+					for k, v := range ts {
+						matchstring += fmt.Sprintf("%s|`%s`", v, v)
+						if k < len(ts) - 1 {
+							matchstring += "|"
+						}
+					}
+					matchstring += fmt.Sprintf(")\\s+)")
+					//fmt.Printf("%s\n", matchstring)
 					matched, err := regexp.MatchString(matchstring, meta.Query)
 					if matched && err == nil {
 						eventinfo.Table = table
@@ -206,8 +216,10 @@ func main() {
 				tabletmp = meta.Table
 				tableid = meta.TableID
 				if len(table) > 0 {
-					if table == meta.Table {
-						LogOut(eventinfo)
+					for _, v := range ts {
+						if v == meta.Table {
+							LogOut(eventinfo)
+						}
 					}
 				} else {
 					LogOut(eventinfo)
@@ -218,10 +230,12 @@ func main() {
 				replication.WRITE_ROWS_EVENTv2, replication.UPDATE_ROWS_EVENTv2, replication.DELETE_ROWS_EVENTv2:
 				if tableid == meta.TableID {
 					if len(table) > 0 {
-						if table == tabletmp {
-							fmt.Fprintf(os.Stdout, "== %s ==\n", replication.EventType(event.Header.EventType))
-							if rowevent {
-								event.Event.Dump(os.Stdout)
+						for _, v := range ts {
+							if v == tabletmp {
+								fmt.Fprintf(os.Stdout, "== %s ==\n", replication.EventType(event.Header.EventType))
+								if rowevent {
+									event.Event.Dump(os.Stdout)
+								}
 							}
 						}
 					} else {
