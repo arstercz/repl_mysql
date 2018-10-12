@@ -1,6 +1,6 @@
 # repl_mysql
 
-`repl_mysql` is based on [replication](https://github.com/siddontang/go-mysql/replication) and can be used to replicate the MySQL table. Only support the following [event type](https://dev.mysql.com/doc/internals/en/binlog-event.html):
+`repl_mysql` is based on [replication](https://github.com/siddontang/go-mysql/replication) and can be used to monit the MySQL table data change. Only support the following [event type](https://dev.mysql.com/doc/internals/en/binlog-event.html):
 ```
 QUERY_EVENT
 TABLE_MAP_EVENT
@@ -70,7 +70,7 @@ eg:
 
 Time: 2018-10-07T17:02:15
 Type: TableMapEvent
-Host: 10.3.254.106, Port: 3301
+Host: 10.0.2.5, Port: 3301
 Schema: percona
 Table: tri1
 Binlog: mysql-bin.000035, Logpos: 3177, Eventsize: 53
@@ -97,7 +97,7 @@ Binlog: mysql-bin.000035, Logpos: 3177, Eventsize: 53
 
 Time: 2018-10-08T10:22:53
 Type: TableMapEvent
-Host: 10.3.254.106, Port: 3301
+Host: 10.0.2.5, Port: 3301
 Schema: percona
 Table: test1
 Binlog: mysql-bin.000035, Logpos: 3744, Eventsize: 57
@@ -119,7 +119,7 @@ Binlog: mysql-bin.000035, Logpos: 3744, Eventsize: 57
 
 Time: 2018-10-08T10:23:22
 Type: QueryEvent
-Host: 10.3.254.106, Port: 3301
+Host: 10.0.2.5, Port: 3301
 Schema: percona
 Binlog: mysql-bin.000035, Logpos: 3982, Eventsize: 85
 Query: BEGIN
@@ -127,7 +127,7 @@ Query: BEGIN
 
 Time: 2018-10-08T10:23:22
 Type: QueryEvent
-Host: 10.3.254.106, Port: 3301
+Host: 10.0.2.5, Port: 3301
 Schema: percona
 Binlog: mysql-bin.000035, Logpos: 4109, Eventsize: 127
 Query: update tri1 set name = "arstercz" where id = 10
@@ -143,7 +143,7 @@ the `-table` option can be set multiple tables which seperated by commas:
 
 Time: 2018-10-08T10:23:22
 Type: QueryEvent
-Host: 10.3.254.106, Port: 3301
+Host: 10.0.2.5, Port: 3301
 Schema: percona
 Table: tri1
 Binlog: mysql-bin.000035, Logpos: 4109, Eventsize: 127
@@ -159,7 +159,7 @@ Query: update tri1 set name = "arstercz" where id = 10
 
 Time: 2018-10-08T10:23:22
 Type: QueryEvent
-Host: 10.3.254.106, Port: 3301
+Host: 10.0.2.5, Port: 3301
 Schema: percona
 Table: tri1
 Binlog: mysql-bin.000035, Logpos: 4109, Eventsize: 127
@@ -167,7 +167,7 @@ Query: update tri1 set name = "arstercz" where id = 10
 
 Time: 2018-10-08T10:35:43
 Type: QueryEvent
-Host: 10.3.254.106, Port: 3301
+Host: 10.0.2.5, Port: 3301
 Schema: percona2
 Table: tri1
 Binlog: mysql-bin.000035, Logpos: 4865, Eventsize: 129
